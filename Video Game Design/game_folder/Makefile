@@ -1,8 +1,8 @@
 SRC = source
 MAINSRC = $(SRC)/main.cpp
 BIN = bin/Simple
-SDL2CFLAGS = -I/usr/include/SDL2 -D_REENTRANT
-SDL2LIBS = -lSDL2
+SDL2CFLAGS = -IC:/libsdl/include/SDL2
+SDL2LIBS = -LC:/libsdl/lib -lmingw32 -lSDL2main -lSDL2
 
 all: $(BIN)
 
