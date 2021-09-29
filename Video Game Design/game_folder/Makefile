@@ -4,7 +4,7 @@ WinBIN = bin/Simple
 WinSDL2CFLAGS = -IC:/libsdl/include/SDL2
 WinSDL2LIBS = -LC:/libsdl/lib -lmingw32 -lSDL2main -lSDL2
 
-allCliff: $(WinBIN)
+WinCliff: $(WinBIN)
 
 $(WinBIN): $(WinMAINSRC)
 	g++ $(WinMAINSRC) $(WinSDL2CFLAGS) -o $(WinBIN) $(WinSDL2LIBS)
