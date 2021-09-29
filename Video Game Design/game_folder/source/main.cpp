@@ -3,96 +3,44 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
+#include <vector>
+#include <map>
+#include "Exception.hpp"
+#include "MediaManager.hpp"
+#include "Game.hpp"
+#include "Particle.hpp"
 
 using namespace std;
 
-class Exception {
-	string description;
-	public:
-	Exception(string newDescription) {
-		description=newDescription;
-	}
-	void fun(/* Exception *this */) {
-	}
-	friend ostream & operator << (ostream &out,const Exception &e) {
-	  return out << "Error: "<<e.description  << endl;
-	}
-};
-
-class Game {
-	protected:
-	SDL_Window *window;
-    SDL_Renderer *ren;
-    int ticks; // ms ticks since start
-	public:
-	Game(string title,int w=640,int h=480) {
-		SDL_Init(SDL_INIT_VIDEO);
-		window = SDL_CreateWindow(
-          title.c_str(),                  // window title
-          SDL_WINDOWPOS_UNDEFINED,           // initial x position
-          SDL_WINDOWPOS_UNDEFINED,           // initial y position
-          w,                               // width, in pixels
-          h,                               // height, in pixels
-          SDL_WINDOW_OPENGL                  // flags - see below
-        );
-        if (window==NULL) throw Exception("Could not create window: ");
-        ren=SDL_CreateRenderer(window,-1, SDL_RENDERER_ACCELERATED);
-        if (ren==NULL) throw Exception("Could not create renderer ");
-        ticks=SDL_GetTicks();
-	}
-	void run() {
-	  int newTicks;
-	  while (1) {
-		newTicks=SDL_GetTicks();
-        SDL_Event e;
-        if (SDL_PollEvent(&e)) {
-          if (e.type == SDL_QUIT) {
-              break;
-          }
-        }
-        update(newTicks-ticks);
-        ticks=newTicks;
-        SDL_Delay(100);
-      }
-	}
-	virtual void update(int dt/*ms of elapsed time*/)=0;
-	~Game() {
-	  SDL_DestroyRenderer(ren);
-      SDL_DestroyWindow(window);
-      SDL_Quit();
-	}
-};
-
-class MyGame:public Game{
-	SDL_Texture *bitmapTex;
-      SDL_Rect src,dest;
+class MyGame:public Game{	  
+    SDL_Rect src;
+    vector<Particle *> particles;
+    Animation a,b;
 	public:
 	MyGame(int w=640,int h=480):Game("Karl was here",w,h) {
-	  SDL_Surface *ob;
-	  ob=SDL_LoadBMP("media/obsticle.bmp");
-      if (ob==NULL) throw Exception("Could not load media/obsticle.bmp");
-      src.w=ob->w;
-      src.h=ob->h;
-      dest.w=src.w;
-      dest.h=src.h;
-      src.x=0;
-      src.y=0;
-      dest.x=0;
-      dest.y=0;
-    
-	  bitmapTex = SDL_CreateTextureFromSurface(ren, ob);
-      if (bitmapTex==NULL) throw Exception ("Could not create texture");
-      SDL_FreeSurface(ob);
+      for (int i=0;i<100;i++) { 
+		 int vx=rand()%500 - 250;
+		 int vy=rand()%500 - 250;
+		 a.read(media,"media/anim1.txt");
+	//	 SDL_Texture *bitmapTex=media->read("media/obsticle.bmp");
+		 src.x=0; src.y=0;
+		 SDL_QueryTexture(a.getTexture(), NULL, NULL, &src.w, &src.h);
+         particles.push_back(new Particle(ren,&a,&src,w/2,h/2,vx,vy,0,50));
+         particles[i]->setBound(0,0,w,h);
+       }
+       b.read(media,"media/background.txt");
+       src.x=0; src.y=0; src.w=640; src.h=480;
 	}
-	void update(int dt) {
-	  dest.x++;
-      dest.y++;
+	void update(double dt) {
       SDL_RenderClear(ren);
-      SDL_RenderCopy(ren, bitmapTex, &src, &dest);
+      b.update(dt);
+      
+      SDL_RenderCopy(ren, b.getTexture(), &src, &src);
+      for (unsigned i=0;i<particles.size();i++) 
+        particles[i]->update(dt);
       SDL_RenderPresent(ren);
 	}
 	~MyGame() {
-	  SDL_DestroyTexture(bitmapTex);
 	}
 };
 
