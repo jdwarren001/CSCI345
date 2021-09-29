@@ -19,7 +19,7 @@ MacBIN = bin/Simple
 MacSDL2CFLAGS = -I/usr/include/SDL2 -D_REENTRANT
 MacSDL2LIBS = -lSDL2
 
-Macall: $(MacBIN)
+Maccall: $(MacBIN)
 
 $(MacBIN): $(MacMAINSRC)
 	g++ $(MacMAINSRC) $(MacSDL2CFLAGS) -o $(MacBIN) $(MacSDL2LIBS)
