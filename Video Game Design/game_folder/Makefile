@@ -1,13 +1,28 @@
-SRC = source
-MAINSRC = $(SRC)/main.cpp
-BIN = bin/Simple
-SDL2CFLAGS = -IC:/libsdl/include/SDL2
-SDL2LIBS = -LC:/libsdl/lib -lmingw32 -lSDL2main -lSDL2
+WinSRC = source
+WinMAINSRC = $(WinSRC)/main.cpp
+WinBIN = bin/Simple
+WinSDL2CFLAGS = -IC:/libsdl/include/SDL2
+WinSDL2LIBS = -LC:/libsdl/lib -lmingw32 -lSDL2main -lSDL2
 
-all: $(BIN)
+allCliff: $(WinBIN)
 
-$(BIN): $(MAINSRC)
-	g++ $(MAINSRC) $(SDL2CFLAGS) -o $(BIN) $(SDL2LIBS)
+$(WinBIN): $(WinMAINSRC)
+	g++ $(WinMAINSRC) $(WinSDL2CFLAGS) -o $(WinBIN) $(WinSDL2LIBS)
 
-run: $(BIN)
-	$(BIN)
+Winrun: $(WinBIN)
+	$(WinBIN)
+
+
+MacSRC = source
+MacMAINSRC = $(MacSRC)/main.cpp
+MacBIN = bin/Simple
+MacSDL2CFLAGS = -I/usr/include/SDL2 -D_REENTRANT
+MacSDL2LIBS = -lSDL2
+
+Macall: $(MacBIN)
+
+$(MacBIN): $(MacMAINSRC)
+	g++ $(MacMAINSRC) $(MacSDL2CFLAGS) -o $(MacBIN) $(MacSDL2LIBS)
+
+Macrun: $(MacBIN)
+	$(MacBIN)
