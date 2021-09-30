@@ -1,28 +1,33 @@
-WinSRC = source
-WinMAINSRC = $(WinSRC)/main.cpp
-WinBIN = bin/Simple
-WinSDL2CFLAGS = -IC:/libsdl/include/SDL2
-WinSDL2LIBS = -LC:/libsdl/lib -lmingw32 -lSDL2main -lSDL2
+SRC=src
+#HEADERS=$(SRC)/Exception.hpp $(SRC)/MediaManager.hpp $(SRC)/Game.hpp $(SRC)/Particle.hpp
+MAINSRC=$(SRC)/main.cpp 
+BIN=bin/Simple
+SDL2CFLAGS=-I/usr/include/SDL2 -D_REENTRANT
+SDL2LIBS=-lSDL2
 
-WinCliff: $(WinBIN)
+all: $(BIN)
 
-$(WinBIN): $(WinMAINSRC)
-	g++ $(WinMAINSRC) $(WinSDL2CFLAGS) -o $(WinBIN) $(WinSDL2LIBS)
+$(BIN): $(MAINSRC) $(HEADERS) 
+		g++ -g $(MAINSRC) $(SDL2CFLAGS) -o $(BIN) $(SDL2LIBS) -DRELEASE
+		
+debug: $(BIN)
+	gdb $(BIN)
+		
+run:  $(BIN)
+	$(BIN)
 
-Winrun: $(WinBIN)
-	$(WinBIN)
 
 
-MacSRC = source
-MacMAINSRC = $(MacSRC)/main.cpp
-MacBIN = bin/Simple
-MacSDL2CFLAGS = -I/usr/include/SDL2 -D_REENTRANT
-MacSDL2LIBS = -lSDL2
+#MacSRC = source
+#MacMAINSRC = $(MacSRC)/main.cpp
+#MacBIN = bin/Simple
+#MacSDL2CFLAGS = -I/usr/include/SDL2 -D_REENTRANT
+#MacSDL2LIBS = -lSDL2
 
-Maccall: $(MacBIN)
+#Maccall: $(MacBIN)
 
-$(MacBIN): $(MacMAINSRC)
-	g++ $(MacMAINSRC) $(MacSDL2CFLAGS) -o $(MacBIN) $(MacSDL2LIBS)
+#$(MacBIN): $(MacMAINSRC)
+#	g++ $(MacMAINSRC) $(MacSDL2CFLAGS) -o $(MacBIN) $(MacSDL2LIBS)
 
-Macrun: $(MacBIN)
-	$(MacBIN)
+#Macrun: $(MacBIN)
+#	$(MacBIN)
