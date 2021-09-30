@@ -1,4 +1,4 @@
-SRC=src
+SRC=source
 #HEADERS=$(SRC)/Exception.hpp $(SRC)/MediaManager.hpp $(SRC)/Game.hpp $(SRC)/Particle.hpp
 MAINSRC=$(SRC)/main.cpp 
 BIN=bin/Simple
