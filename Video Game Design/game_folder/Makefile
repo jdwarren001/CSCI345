@@ -7,7 +7,7 @@ SDL2LIBS=-lSDL2
 
 all: $(BIN)
 $(BIN): $(MAINSRC) $(HEADERS) 
-		g++ -g $(MAINSRC) $(SDL2CFLAGS) -o $(BIN) $(SDL2LIBS) -DRELEASE
+		g++ -g $(MAINSRC) $(SDL2CFLAGS) -o $(BIN) $(SDL2LIBS)
 		
 debug: $(BIN)
 	gdb $(BIN)
