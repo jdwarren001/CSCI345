@@ -33,7 +33,7 @@ class MyGame:public Game{
 	Mix_Chunk *sound;
     int jx,jy;
 	public:
-	MyGame(int w=640,int h=480):Game("Karl was here",w,h) {
+	MyGame(int w=640,int h=480):Game("Galatic Battle Star",w,h) {
 	  sound=media->readWav("media/crash.wav");
       for (int i=0;i<16;i++) { 
 		 int vx=rand()%500 - 250;
