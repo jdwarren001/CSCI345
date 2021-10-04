@@ -1,4 +1,3 @@
-3
-100 first
-100 second
-800 third
+2
+100 bird1
+100 bird2
