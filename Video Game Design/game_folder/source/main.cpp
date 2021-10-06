@@ -29,13 +29,18 @@ class MyParticle:public Particle {
 class MyGame:public Game{	  
     SDL_Rect src;
     vector<Particle *> particles;
-    Animation a,b;
+    Animation a,b,c;
 	Mix_Chunk *sound;
     int jx,jy;
 	public:
 	MyGame(int w=640,int h=480):Game("Galatic Battle Star",w,h) {
 	  sound=media->readWav("media/crash.wav");
-      for (int i=0;i<16;i++) { 
+		c.read(media,"media/anim2.txt");
+		src.x=0; src.y=0;
+		SDL_QueryTexture(c.getTexture(), NULL, NULL, &src.w, &src.h);
+		particles.push_back(new MyParticle(ren,&c,sound,&src,w/2-100,h/2-100,0,0,0,0));
+		particles[0]->setBound(0,0,w,h);
+      for (int i=1;i<=2;i++) { 
 		 int vx=rand()%500 - 250;
 		 int vy=rand()%500 - 250;
 		 a.read(media,"media/anim1.txt");
