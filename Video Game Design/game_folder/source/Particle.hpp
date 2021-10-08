@@ -81,4 +81,12 @@ class Particle {
       a->update(dt);
       SDL_RenderCopy(ren, a->getTexture(), src, &dest);
   }
+
+  double getx() {
+    return x;
+  }
+
+  double gety() {
+    return y;
+  }
 };
