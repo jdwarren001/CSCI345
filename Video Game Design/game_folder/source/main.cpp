@@ -52,7 +52,6 @@ class MyGame:public Game{
 		 SDL_QueryTexture(a.getTexture(), NULL, NULL, &src.w, &src.h);
          particles.push_back(new MyParticle(ren,&a,sound,&src,w/2,h/2,0,0,0,0));
          particles[i]->setBound(0,0,w,h);
-		 particlesTemp
        }
        jx=w/2;
        jy=w/2;
